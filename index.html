@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>stopwatch</title>
+    <style>         
+     
+      #time {
+        font-family: sans-serif;
+        font-size: 130pt;
+         top: 40%;
+        left: 45%;        
+        position: absolute;
+        margin-top: -65pt; /* Отрицательный отступ от верхнего края страницы, должен равняться половине высоты блока со знаком минус */      
+        color: white;
+        text-shadow:  0 0 5px white,   0 0 15px white, 0 0 20px white
+      }
+    
+      #start, #stop, #clear {
+        background-color: black;
+        display: block;
+        border: none;
+        position: absolute;
+        left: 0;
+        width: 0;
+        border-radius: 25px;
+        color: #303030;
+        text-align: center;
+        font-size: 28px;
+        padding: 20px;
+        width: 200px;
+        outline: none;
+        cursor: pointer;
+        margin: 5px;
+        transition: 0.5s;
+        margin-top: -14pt;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+      
+      #start {
+        top: 20%;
+      }
+
+      #stop {
+        top: 40%;
+      }
+
+      #clear {
+        top: 60%;
+      }
+
+      .btn-group button:before {
+        content:'';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        transition: all 2s ease;
+        
+      }
+
+      .btn-group button:hover:before {
+        width: 100%;
+      }
+
+      .btn-group button:active {
+        background-color: black;
+        box-shadow: 0 5px black;
+        transform: translateY(8px);
+      }
+        
+      #start {
+        cursor: pointer;      
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="btn-group">
+      <button id='start'>Пуск</button>
+      <button id='stop'>Стоп</button>
+      <button id='clear'>Стереть</button>
+    </div>
+
+    <div class='container'>
+      <p id='time'></p>
+    </div>
+       
+    <script>  
+      var start = document.getElementById('start');
+      var stop = document.getElementById('stop');
+      var clear = document.getElementById('clear');
+      var html = document.querySelector('html');
+      html.style.backgroundColor = "black";
+    
+      let sec = -1; // Start time
+      
+      start.onclick = function() {
+        start.style.cursor = 'not-allowed'
+        start.style.color = 'black'
+        start.disabled = true;
+        start.style.visibility = 'hidden'
+
+        var timeNow = function () {
+          sec ++      
+          
+          let = hours = Math.floor(sec/3600);
+          let = minutes = Math.floor((sec % 3600)/60);
+          let = seconds = Math.floor(sec % 60)
+        
+          let = secondsValue = (seconds >= 0 && seconds <=9 ) ? '0' + seconds : seconds;
+          let = minutesValue = (minutes >= 0 && minutes <=9 ) ? '0' + minutes : minutes;
+          let = hoursValue = (hours >= 0 && hours <=9 ) ? '0' + hours : hours;
+                    
+          if (sec < 10) {
+            document.getElementById('time').textContent = sec;
+          };
+
+          if (sec > 9 && sec < 60) {
+          document.getElementById('time').textContent = secondsValue;
+          document.getElementById('time').style.left = "41.30%";
+          };
+
+          if (sec > 59 && sec < 3600) {
+          document.getElementById('time').textContent = minutesValue + ':' + secondsValue;
+          document.getElementById('time').style.left = "29.75%";
+          }
+
+          if (sec >= 3600) {
+            document.getElementById('time').textContent = hoursValue + ":" + minutesValue + ':' + secondsValue;
+            document.getElementById('time').style.left = "20.75%";
+          };
+        };
+      
+        createTime = setInterval(timeNow, 1000)
+      };
+
+      stop.onclick = function() {
+        clearInterval(createTime);
+        start.style.color = '#303030';
+        start.disabled = false;
+        start.style.cursor = 'pointer';
+        start.style.visibility = 'visible';
+      };
+
+      clear.onclick = function() {
+        sec = -1;
+        document.getElementById('time').textContent = null;
+        document.getElementById('time').style.left = "45.6%";
+      };
+
+    </script>
+  </body>
+</html>
